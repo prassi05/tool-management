@@ -7,18 +7,18 @@
 ## 📸 Dashboard Screenshots
 
 ### Login Page
-![Login Page](./screenshots/login.png)
+![Login Page](./login.png)
 
 ### Manager Dashboard
-![Manager Dashboard](./screenshots/manager-dashboard.png)
+![Manager Dashboard](./manager-dashboard.png)
 *Overview with statistics, project management, and analytics*
 
 ### Team Leader Dashboard
-![Team Leader Dashboard](./screenshots/team-leader-dashboard.png)
+![Team Leader Dashboard](./team-leader-dashboard.png)
 *Kanban board for task management and team tracking*
 
 ### Team Member Dashboard
-![Team Member Dashboard](./screenshots/team-member-dashboard.png)
+![Team Member Dashboard](./team-member-dashboard.png)
 *Task list with status updates and calendar view*
 
 ---
@@ -224,4 +224,5 @@ For production use, add:
 
 
 ---
+
 
