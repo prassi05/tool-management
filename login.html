@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Task Management Tool</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <h1 class="main-title">Task Management Tool</h1>
+            <h2 class="login-title">Login</h2>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="employee@example.com"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="••••••••••"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="role">Select Role</label>
+                    <select id="role" name="role" required>
+                        <option value="">Choose your role...</option>
+                        <option value="manager">Manager</option>
+                        <option value="team-leader">Team Leader</option>
+                        <option value="team-member">Team Member</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="login-button">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Error Popup Modal -->
+    <div class="modal" id="errorModal">
+        <div class="modal-overlay" onclick="closeErrorModal()"></div>
+        <div class="modal-content">
+            <div class="error-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h3 class="modal-title">Login Failed</h3>
+            <p class="modal-message" id="errorMessage">Invalid credentials or role mismatch. Please try again.</p>
+            <button class="modal-button" onclick="closeErrorModal()">
+                Try Again
+            </button>
+        </div>
+    </div>
+
+    <!-- Success Popup Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content success">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 class="modal-title">Success!</h3>
+            <p class="modal-message">Login successful. Redirecting to your dashboard...</p>
+            <div class="loader"></div>
+        </div>
+    </div>
+    
+    <script src="login.js"></script>
+</body>
+</html>

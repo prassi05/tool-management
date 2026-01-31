@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Member Dashboard - Task Management Tool</title>
+    <link rel="stylesheet" href="team-member-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-tasks"></i>
+                <span>Task Manager</span>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-section="overview">
+                <i class="fas fa-chart-line"></i>
+                <span>Overview</span>
+            </a>
+            <a href="#" class="nav-item" data-section="my-tasks">
+                <i class="fas fa-tasks"></i>
+                <span>My Tasks</span>
+            </a>
+            <a href="#" class="nav-item" data-section="completed">
+                <i class="fas fa-check-circle"></i>
+                <span>Completed</span>
+            </a>
+            <a href="#" class="nav-item" data-section="calendar">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Calendar</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">TM</div>
+                <div class="user-info">
+                    <div class="user-name">Team Member</div>
+                    <div class="user-role">Developer</div>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="top-header">
+            <div class="header-left">
+                <h1 class="page-title">Dashboard Overview</h1>
+                <p class="page-subtitle">Track your tasks and manage your work</p>
+            </div>
+            <div class="header-right">
+                <div class="quick-stats">
+                    <div class="quick-stat">
+                        <span class="quick-stat-label">Due Today</span>
+                        <span class="quick-stat-value" id="dueToday">0</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Overview Section -->
+        <section id="overview-section" class="content-section active">
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalTasks">0</div>
+                        <div class="stat-label">Total Tasks</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-spinner"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="inProgressTasks">0</div>
+                        <div class="stat-label">In Progress</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="completedTasks">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="pendingTasks">0</div>
+                        <div class="stat-label">Pending</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Priority Tasks -->
+            <div class="section-card">
+                <div class="card-header">
+                    <h2>High Priority Tasks</h2>
+                    <a href="#" class="view-all" onclick="showSection('my-tasks')">View All</a>
+                </div>
+                <div class="tasks-list" id="priorityTasksList">
+                    <!-- Priority tasks will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="section-card">
+                <div class="card-header">
+                    <h2>Recent Activity</h2>
+                </div>
+                <div class="activity-list" id="activityList">
+                    <!-- Activity will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- My Tasks Section -->
+        <section id="my-tasks-section" class="content-section">
+            <div class="section-header">
+                <div class="search-filter">
+                    <input type="text" id="taskSearch" placeholder="Search tasks..." class="search-input">
+                    <select id="taskFilter" class="filter-select">
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="in-progress">In Progress</option>
+                    </select>
+                    <select id="priorityFilter" class="filter-select">
+                        <option value="all">All Priorities</option>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="tasks-grid" id="tasksGrid">
+                <!-- Tasks will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Completed Section -->
+        <section id="completed-section" class="content-section">
+            <div class="completed-stats">
+                <div class="completion-card">
+                    <div class="completion-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="completion-info">
+                        <div class="completion-value" id="completionRate">0%</div>
+                        <div class="completion-label">Completion Rate</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="card-header">
+                    <h2>Completed Tasks</h2>
+                </div>
+                <div class="completed-tasks-list" id="completedTasksList">
+                    <!-- Completed tasks will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Calendar Section -->
+        <section id="calendar-section" class="content-section">
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button class="calendar-nav" onclick="previousMonth()">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2 id="calendarMonth">January 2026</h2>
+                    <button class="calendar-nav" onclick="nextMonth()">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Calendar will be generated here -->
+                </div>
+                <div class="calendar-events">
+                    <h3>Upcoming Deadlines</h3>
+                    <div id="upcomingDeadlines">
+                        <!-- Deadlines will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- View Task Modal -->
+    <div class="modal" id="viewTaskModal">
+        <div class="modal-overlay" onclick="closeViewTaskModal()"></div>
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="viewTaskTitle">Task Details</h2>
+                <button class="close-btn" onclick="closeViewTaskModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="task-details" id="taskDetailsContent">
+                <!-- Task details will be loaded here -->
+            </div>
+            <div class="task-actions">
+                <button class="btn-secondary" onclick="closeViewTaskModal()">Close</button>
+                <button class="btn-primary" onclick="updateTaskStatus()">Update Status</button>
+                <button class="btn-success" onclick="addComment()">Add Comment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Status Modal -->
+    <div class="modal" id="updateStatusModal">
+        <div class="modal-overlay" onclick="closeUpdateStatusModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Update Task Status</h2>
+                <button class="close-btn" onclick="closeUpdateStatusModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="updateStatusForm">
+                <div class="form-group">
+                    <label>New Status</label>
+                    <select id="newStatus" required>
+                        <option value="pending">Pending</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeUpdateStatusModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Comment Modal -->
+    <div class="modal" id="addCommentModal">
+        <div class="modal-overlay" onclick="closeAddCommentModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Comment</h2>
+                <button class="close-btn" onclick="closeAddCommentModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="addCommentForm">
+                <div class="form-group">
+                    <label>Your Comment</label>
+                    <textarea id="commentText" rows="4" required placeholder="Share your progress or updates..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Attach File (Optional)</label>
+                    <input type="file" id="commentFile" class="file-input">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeAddCommentModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Comment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success/Error Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Action completed successfully</span>
+    </div>
+
+    <script src="team-member-dashboard.js"></script>
+</body>
+</html>
